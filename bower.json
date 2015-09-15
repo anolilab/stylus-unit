@@ -1,0 +1,34 @@
+{
+  "name": "stylus-unit",
+  "version": "0.0.0",
+  "homepage": "http://anolilab.de",
+  "authors": [
+    "Daniel Bannert <d.bannert@anolilab.de>"
+  ],
+  "description": "Stylus unit tests",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "keywords": [
+    "grunt",
+    "bower",
+    "bin",
+    "front-end",
+    "development",
+    "dev",
+    "tool",
+    "Stylus",
+    "CSS",
+    "test",
+    "syntax"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
