@@ -1,0 +1,30 @@
+sudo: false
+
+language: node_js
+
+node_js:
+  - "0.12"
+  - "0.10"
+  - "4"
+
+before_install:
+  - npm install -g grunt-cli bower
+
+before_script:
+  - npm install
+  - bower install
+
+script:
+  - grunt test -v --stack -d
+
+matrix:
+  fast_finish: true
+
+# Gitter notifications
+# notifications:
+#   webhooks:
+#     urls:
+#       - https://webhooks.gitter.im/e/number
+#     on_success: change
+#     on_failure: always
+#     on_start: false
