@@ -10,6 +10,13 @@
   // Allow ES6.
   "esnext": true,
 
+  "globals": {
+    "root": true,
+    "config": true,
+    "describe": true,
+    "it": true
+  },
+
   /*
    * ENFORCING OPTIONS
    * =================

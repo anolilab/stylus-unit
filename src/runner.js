@@ -1,6 +1,6 @@
 import fs from 'fs';
 import cleanCSS from 'clean-css';
-import _ from 'lodash';
+import lodash from 'lodash';
 import glob from 'glob';
 import { trimNewlines, isEmpty, isEmptyFile } from './utils';
 import stylusRenderer from './stylus';
@@ -9,7 +9,9 @@ import stylusRenderer from './stylus';
 import { should } from 'chai';
 /* jshint ignore:end */ /* eslint-enable */
 
-function extractTestFromString(test) {
+function extractTestFromString(testString) {
+  let test = testString;
+
   const description = test.match(/.*/)[0];
   const stylusAndCss = test.split(/.*@expect.*/).map(trimNewlines);
   test = test.replace(/.*/, '');
@@ -17,15 +19,15 @@ function extractTestFromString(test) {
   return {
     description: description,
     givenStylus: stylusAndCss[0],
-    expectedCss: cleanCSS.process(stylusAndCss[1])
+    expectedCss: cleanCSS.process(stylusAndCss[1]),
   };
 }
 
 function extractTestsFromString(string) {
   //  Filter empty strings out, it seems that the
   //  @it line leaves an empty string entry behind in the array
-  return _.map(
-    _.reject(
+  return lodash.map(
+    lodash.reject(
       string.split(/.*@it\s?/),
       isEmpty
     ),
@@ -40,20 +42,20 @@ function getTestsFromFile(filePath) {
 }
 
 function forEachTest(config, callback) {
-  const testFiles = _.reject(
+  const testFiles = lodash.reject(
     glob.sync(config.testDirPath + '/**/*.styl'),
     isEmptyFile
   );
 
-  _.each(
-    _.flatten(
-      _.map(testFiles, getTestsFromFile)
+  lodash.each(
+    lodash.flatten(
+      lodash.map(testFiles, getTestsFromFile)
     ),
     callback
   );
 }
 
-export default function (config) {
+export default function(config) {
   describe(config.describe, function() {
     forEachTest(config, function(test) {
       it(test.description, function() {

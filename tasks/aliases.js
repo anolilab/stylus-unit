@@ -3,9 +3,11 @@ module.exports = {
     'jsonlint:dev',
     'jscs:dev',
     'jshint:dev',
-    'eslint:dev'
+    'eslint:dev',
+    'babel:test'
   ],
   'default': [
+    'clean',
     'test',
     'babel:dist'
   ]

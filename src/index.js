@@ -1,6 +1,6 @@
 import Mocha from 'mocha';
 import fs from 'fs';
-import _ from 'lodash';
+import lodash from 'lodash';
 
 /**
  *  @summary  Read the users npm package name property to provide a name for
@@ -33,16 +33,16 @@ export function stylusTestRunner(customConfig) {
     describe: getDefaultTestDescription(),
     testDirPath: './tests',
     stylus: {
-      compress: true
+      compress: true,
     },
     mocha: {
-      reporter: 'spec'
-    }
+      reporter: 'spec',
+    },
   };
 
   //  global config will be used by runner
   //  for configing stylus compiler and test description / suite path
-  root.config = _.merge(defaultConfig, customConfig);
+  root.config = lodash.merge(defaultConfig, customConfig);
 
   new Mocha(config.mocha)
   .addFile(__dirname + '/runner')
