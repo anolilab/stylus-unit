@@ -1,6 +1,6 @@
 {
-  "name": "anolilab-stylus-unit",
-  "version": "0.0.1",
+  "name": "stylus-unit",
+  "version": "0.0.3",
   "description": "Testing your stylus source code.",
   "author": {
     "name": "Daniel Bannert",
@@ -16,8 +16,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "grunt test -v --stack -d",
-    "install": "grunt"
+    "test": "grunt test -v --stack -d"
   },
   "bugs": {
     "url": "https://github.com/anolilab/stylus-unit/issues"
@@ -57,11 +56,14 @@
   },
   "keywords": [
     "grunt",
-    "bower",
-    "bin",
-    "front-end",
     "development",
     "dev",
-    "tool"
+    "tool",
+    "unit",
+    "stylus",
+    "stylus-unit",
+    "anolilab",
+    "mocha",
+    "chai"
   ]
 }
