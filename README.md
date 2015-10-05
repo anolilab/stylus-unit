@@ -16,7 +16,6 @@
 ### Bits and Pieces:
 * [npm:](https://npmjs.org/) Well... it's a Node.js package manager
 * [Grunt:](http://gruntjs.com/) Automates common tasks: test, build, clean
-* [Bower:](http://bower.io/) Package manager for browser dependencies
 * [Babel:](https://github.com/babel/babel/) Use next generation JavaScript, today.
 
 ## Getting Started:

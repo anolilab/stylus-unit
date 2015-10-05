@@ -10,7 +10,7 @@ module.exports = {
     src: [
       'Gruntfile.js',
       'src/**/*.js',
-      'tests/**/*.js'
+      'tests/src/**/*.js'
     ]
   }
 };
