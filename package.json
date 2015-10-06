@@ -1,6 +1,6 @@
 {
   "name": "stylus-unit",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Testing your stylus source code.",
   "author": {
     "name": "Daniel Bannert",
