@@ -2,11 +2,6 @@
 //babel config
 
 module.exports = {
-  options: {
-    stage: 1,
-    loose: ['all'],
-    optional: ['runtime', 'es7.asyncFunctions']
-  },
   dist: {
     options: {
       sourceMap: false
@@ -20,6 +15,9 @@ module.exports = {
   },
   test: {
     options: {
+      stage: 1,
+      loose: ['all'],
+      optional: ['runtime'],
       sourceMap: true
     },
     files: {

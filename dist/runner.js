@@ -1,8 +1,10 @@
 'use strict';
 
-var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
 
-exports.__esModule = true;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _fs = require('fs');
 
@@ -53,7 +55,7 @@ function extractTestsFromString(string) {
 }
 
 function getTestsFromFile(filePath) {
-  var fileContents = _utils.trimNewlines(_fs2['default'].readFileSync(filePath, 'utf8'));
+  var fileContents = (0, _utils.trimNewlines)(_fs2['default'].readFileSync(filePath, 'utf8'));
 
   return extractTestsFromString(fileContents);
 }
@@ -68,7 +70,7 @@ exports['default'] = function (config) {
   describe(config.describe, function () {
     forEachTest(config, function (test) {
       it(test.description, function () {
-        _stylus2['default'](test.givenStylus, config.stylus, function (actualCss) {
+        (0, _stylus2['default'])(test.givenStylus, config.stylus, function (actualCss) {
           actualCss.should.equal(test.expectedCss);
         });
       });

@@ -1,8 +1,10 @@
 'use strict';
 
-var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
 
-exports.__esModule = true;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _Stylus = require('Stylus');
 
@@ -24,7 +26,7 @@ function styl(string, config) {
   // First through the whole config at stylus,
   // it should ignore stuff it cannot handle
   // like use/import/include etc?
-  var thisStylus = _Stylus2['default'](string, config);
+  var thisStylus = (0, _Stylus2['default'])(string, config);
 
   // Enumerate over the config options that the
   // stylus API only makes available by methods
