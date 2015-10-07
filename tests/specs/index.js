@@ -3,7 +3,6 @@
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
 
 exports.__esModule = true;
-exports.stylusTestRunner = stylusTestRunner;
 
 var _mocha = require('mocha');
 
@@ -44,7 +43,7 @@ function getDefaultTestDescription() {
  *  mocha       <Object>  mocha config
  */
 
-function stylusTestRunner(customConfig) {
+exports['default'] = function (customConfig) {
   var defaultConfig = {
     describe: getDefaultTestDescription(),
     testDirPath: './tests',
@@ -61,5 +60,7 @@ function stylusTestRunner(customConfig) {
   root.config = _lodash2['default'].merge(defaultConfig, customConfig);
 
   new _mocha2['default'](config.mocha).addFile(__dirname + '/runner').run();
-}
+};
+
+module.exports = exports['default'];
 //# sourceMappingURL=index.js.map

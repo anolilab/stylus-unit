@@ -28,7 +28,7 @@ function getDefaultTestDescription() {
  *  stylus      <Object>  stylus config
  *  mocha       <Object>  mocha config
  */
-export function stylusTestRunner(customConfig) {
+export default function(customConfig) {
   const defaultConfig = {
     describe: getDefaultTestDescription(),
     testDirPath: './tests',
