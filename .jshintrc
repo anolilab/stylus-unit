@@ -14,7 +14,9 @@
     "root": true,
     "config": true,
     "describe": true,
-    "it": true
+    "it": true,
+    "assert": true,
+    "expect": true
   },
 
   /*

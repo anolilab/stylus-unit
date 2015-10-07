@@ -4,7 +4,8 @@ module.exports = {
     'jscs:dev',
     'jshint:dev',
     'eslint:dev',
-    'babel:test'
+    'babel:test',
+    'mochacli'
   ],
   'default': [
     'clean',

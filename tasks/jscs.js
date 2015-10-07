@@ -5,8 +5,7 @@ module.exports = {
   dev: {
     src: [
       'Gruntfile.js',
-      'src/**/*.js',
-      'tests/src/**/*.js'
+      'src/**/*.js'
     ],
     options: {
       config: '.jscsrc',

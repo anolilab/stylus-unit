@@ -3,9 +3,10 @@
 
 module.exports = {
   options: {
-    require: ['should'],
     reporter: 'spec',
     bail: true
   },
-  all: ['tests/**/*.test.js']
+  all: [
+    'tests/**/*.test.js'
+  ]
 };

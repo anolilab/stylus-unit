@@ -16,6 +16,7 @@ module.exports = {
       'dist/runner.js': 'src/runner.js',
       'dist/stylus.js': 'src/stylus.js',
       'dist/utils.js': 'src/utils.js',
+      'dist/parser.js': 'src/parser.js'
     }
   },
   test: {
@@ -27,6 +28,7 @@ module.exports = {
       'tests/specs/runner.js': 'src/runner.js',
       'tests/specs/stylus.js': 'src/stylus.js',
       'tests/specs/utils.js': 'src/utils.js',
+      'tests/specs/parser.js': 'src/parser.js'
     }
   }
 };
