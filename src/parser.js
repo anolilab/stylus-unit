@@ -35,6 +35,6 @@ function extractTestsFromString(string) {
   );
 }
 
-export default function(string) {
-  return extractTestsFromString(getFile(string));
+export default function(file) {
+  return extractTestsFromString(getFile(file));
 }

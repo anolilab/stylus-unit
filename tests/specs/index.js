@@ -55,11 +55,15 @@ exports['default'] = function (customConfig) {
     }
   };
 
-  //  global config will be used by runner
-  //  for configing stylus compiler and test description / suite path
+  // global config will be used by runner
+  // for configing stylus compiler and test description / suite path
   root.config = _lodash2['default'].merge(defaultConfig, customConfig);
 
-  new _mocha2['default'](config.mocha).addFile(__dirname + '/runner').run();
+  new _mocha2['default'](config.mocha).addFile(__dirname + '/runner').run(function (failures) {
+    process.on('exit', function () {
+      process.exit(failures);
+    });
+  });
 };
 
 module.exports = exports['default'];

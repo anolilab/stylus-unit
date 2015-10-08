@@ -44,8 +44,8 @@ function extractTestsFromString(string) {
   return _lodash2['default'].map(_lodash2['default'].reject(string.split(/.*@it\s?/), _utils.isEmpty), extractTestFromString);
 }
 
-exports['default'] = function (string) {
-  return extractTestsFromString(getFile(string));
+exports['default'] = function (file) {
+  return extractTestsFromString(getFile(file));
 };
 
 module.exports = exports['default'];

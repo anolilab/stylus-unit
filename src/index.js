@@ -40,11 +40,15 @@ export default function(customConfig) {
     },
   };
 
-  //  global config will be used by runner
-  //  for configing stylus compiler and test description / suite path
+  // global config will be used by runner
+  // for configing stylus compiler and test description / suite path
   root.config = lodash.merge(defaultConfig, customConfig);
 
   new Mocha(config.mocha)
   .addFile(__dirname + '/runner')
-  .run();
+  .run(function(failures) {
+    process.on('exit', function() {
+      process.exit(failures);
+    });
+  });
 }
