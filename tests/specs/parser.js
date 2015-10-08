@@ -44,6 +44,24 @@ function extractTestsFromString(string) {
   return _lodash2['default'].map(_lodash2['default'].reject(string.split(/.*@it\s?/), _utils.isEmpty), extractTestFromString);
 }
 
+function getDescribe(string, nummber) {
+  var describe = string.match(/@describe.*/g).map(_utils.trimNewlines);
+
+  if (describe[nummber] !== '') {
+    return describe[nummber].replace('@describe ', '');
+  }
+
+  return '';
+}
+
+function extractMainDescribeFromTest(testString) {
+  var describe = getDescribe(testString, 0);
+}
+
+function extractDescribeFromTest(string) {
+  var describe = getDescribe(testString, 1);
+}
+
 exports['default'] = function (file) {
   return extractTestsFromString(getFile(file));
 };

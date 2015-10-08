@@ -35,6 +35,26 @@ function extractTestsFromString(string) {
   );
 }
 
+function getDescribe(string, nummber) {
+  const describe = string.match(/@describe.*/g).map(trimNewlines);
+
+  if (describe[nummber] !== '') {
+    return describe[nummber].replace('@describe ', '');
+  }
+
+  return '';
+}
+
+function extractMainDescribeFromTest(testString) {
+  const describe = getDescribe(testString, 0);
+
+}
+
+function extractDescribeFromTest(string) {
+  const describe = getDescribe(testString, 1);
+
+}
+
 export default function(file) {
   return extractTestsFromString(getFile(file));
 }

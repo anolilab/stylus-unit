@@ -16,3 +16,14 @@ describe('#parser:extractTestFromString', function() {
     // assert.equal(extractTestFromString('./tests/fixture/textFile.txt'), 'dasdada');
   });
 });
+
+describe('#parser:getDescribe', function() {
+  it('get describe', function() {
+    var getDescribe = utils.__get__('getDescribe');
+    var getFile = utils.__get__('getFile');
+    var string = getFile('./tests/fixture/describe.styl');
+
+    assert.equal(getDescribe(string, 0), 'test');
+    assert.equal(getDescribe(string, 1), 'test2');
+  });
+});
