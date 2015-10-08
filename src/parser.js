@@ -35,6 +35,14 @@ function extractTestsFromString(string) {
   );
 }
 
+function extractMainDescribeFromTest(string) {
+
+}
+
+function extractDescribeFromTest(string) {
+
+}
+
 export default function(file) {
   return extractTestsFromString(getFile(file));
 }
