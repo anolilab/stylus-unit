@@ -1,5 +1,5 @@
 import fs from 'fs';
-import cleanCSS from 'clean-css';
+import CleanCSS from 'clean-css';
 import lodash from 'lodash';
 import { trimNewlines, isEmpty } from './utils';
 
@@ -26,14 +26,14 @@ function getFile(path) {
 function extractTestFromString(content) {
   let test = content;
 
-  const description = test.match(/.*/)[0];
+  const description = test.match(/.*/g)[0];
   const stylusAndCss = test.split(/.*@expect.*/).map(trimNewlines);
   test = test.replace(/.*/, '');
 
   return {
     description: description,
     givenStylus: stylusAndCss[0],
-    expectedCss: cleanCSS.process(stylusAndCss[1]),
+    expectedCss: new CleanCSS().minify(stylusAndCss[1]).styles,
   };
 }
 

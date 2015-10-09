@@ -1,11 +1,11 @@
 import stylus from 'Stylus';
 import lodash from 'lodash';
-import cleanCSS from 'clean-css';
+import CleanCSS from 'clean-css';
 
 /**
  * Arrayify.
  *
- * @param  {Array} it
+ * @param  {Array|String|Object} it
  *
  * @return {Bool}
  */
@@ -52,6 +52,6 @@ export default function(stylusCode, config, callback) {
       throw err;
     }
 
-    callback(cleanCSS.process(cssFromStylus));
+    callback(new CleanCSS().minify(cssFromStylus).styles);
   });
 }

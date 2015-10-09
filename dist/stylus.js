@@ -19,7 +19,7 @@ var _cleanCss2 = _interopRequireDefault(_cleanCss);
 /**
  * Arrayify.
  *
- * @param  {Array} it
+ * @param  {Array|String|Object} it
  *
  * @return {Bool}
  */
@@ -66,7 +66,7 @@ exports['default'] = function (stylusCode, config, callback) {
       throw err;
     }
 
-    callback(_cleanCss2['default'].process(cssFromStylus));
+    callback(new _cleanCss2['default']().minify(cssFromStylus).styles);
   });
 };
 

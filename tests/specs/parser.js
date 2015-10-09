@@ -41,14 +41,14 @@ function getFile(path) {
 function extractTestFromString(content) {
   var test = content;
 
-  var description = test.match(/.*/)[0];
+  var description = test.match(/.*/g)[0];
   var stylusAndCss = test.split(/.*@expect.*/).map(_utils.trimNewlines);
   test = test.replace(/.*/, '');
 
   return {
     description: description,
     givenStylus: stylusAndCss[0],
-    expectedCss: _cleanCss2['default'].process(stylusAndCss[1])
+    expectedCss: new _cleanCss2['default']().minify(stylusAndCss[1]).styles
   };
 }
 

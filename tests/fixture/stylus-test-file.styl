@@ -1,0 +1,20 @@
+// @describe Utils
+// @describe amcss
+// @it should output amcss for a given properties
+  am(module)
+    color: red;
+  am(module, blue)
+    color: blue;
+  am(module, large)
+    font-size: 2em;
+
+// @expect
+  [ui-module] {
+    color: red;
+  }
+  [ui-module~="blue"] {
+    color: blue;
+  }
+  [ui-module~="large"] {
+    font-size: 2em;
+  }
