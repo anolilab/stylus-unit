@@ -1,4 +1,4 @@
-import stylus from 'Stylus';
+import stylus from 'stylus';
 import lodash from 'lodash';
 import CleanCSS from 'clean-css';
 
