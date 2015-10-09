@@ -17,8 +17,10 @@ var _lodash = require('lodash');
 var _lodash2 = _interopRequireDefault(_lodash);
 
 /**
- *  @summary  Read the users npm package name property to provide a name for
- *            the test suite's initial 'describe'
+ * Get description from package.json.
+ *
+ * @summary  Read the users npm package name property to provide a name for
+ *           the test suite's initial 'describe'
  *
  *  @returns  <String>  '' || 'some-package-name'
  */
@@ -35,15 +37,17 @@ function getDefaultTestDescription() {
 }
 
 /**
- * @param customConfig:
+ * Run Mocha with stylus runner.
  *
- *  describe    <String>  Title used by Mocha top-level describe function
- *  testDirPath <String>  the path where your styl tests are
- *  stylus      <Object>  stylus config
- *  mocha       <Object>  mocha config
+ * @param customConfig:
  */
 
 exports['default'] = function (customConfig) {
+  // describe    <String>  Title used by Mocha top-level describe function
+  // testDirPath <String>  the path where your styl tests are
+  // stylus      <Object>  stylus config
+  // mocha       <Object>  mocha config
+
   var defaultConfig = {
     describe: getDefaultTestDescription(),
     testDirPath: './tests',

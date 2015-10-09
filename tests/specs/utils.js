@@ -12,27 +12,51 @@ var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
 
-// whitespace mutation utils
+/**
+ * Trim string.
+ *
+ * @param  {String} string
+ *
+ * @return {String}
+ */
 
 function trim(string) {
   return string.trim();
 }
 
-// remove all new lines
+/**
+ * Remove all new lines.
+ *
+ * @param  {String} string
+ *
+ * @return {String}
+ */
 
 function trimNewlines(string) {
   return string.replace(/^(\s*|\n*)|(\s*|\n*)$/g, '');
 }
 
-// string utils
+/**
+ * Check if string is empty.
+ *
+ * @param  {String}  string
+ *
+ * @return {Boolean}
+ */
 
 function isEmpty(string) {
   return !string.length;
 }
 
-// check if file is empty
+/**
+ * check if file is empty.
+ *
+ * @param  {String}  path
+ *
+ * @return {Boolean}
+ */
 
-function isEmptyFile(filePath) {
-  return isEmpty(trimNewlines(_fs2['default'].readFileSync(filePath, 'utf8')));
+function isEmptyFile(path) {
+  return isEmpty(trimNewlines(_fs2['default'].readFileSync(path, 'utf8')));
 }
 //# sourceMappingURL=utils.js.map

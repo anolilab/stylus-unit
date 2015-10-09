@@ -28,11 +28,27 @@ var _chai = require('chai');
 
 /* jshint ignore:end */ /* eslint-enable */
 
+/**
+ * Search for all tests.
+ *
+ * @param  {Array}    config
+ * @param  {Function} callback
+ *
+ * @return {[type]}
+ */
 function forEachTest(config, callback) {
   var testFiles = _lodash2['default'].reject(_glob2['default'].sync(config.testDirPath + '/**/*.styl'), _utils.isEmptyFile);
 
   _lodash2['default'].each(_lodash2['default'].flatten(_lodash2['default'].map(testFiles, _parser2['default'])), callback);
 }
+
+/**
+ * Run stylus tests by mocha.
+ *
+ * @param  {Array} config
+ *
+ * @return {[type]}
+ */
 
 exports['default'] = function (config) {
   describe(config.describe, function () {

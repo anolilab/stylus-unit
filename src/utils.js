@@ -1,21 +1,45 @@
 import fs from 'fs';
 
-// whitespace mutation utils
+/**
+ * Trim string.
+ *
+ * @param  {String} string
+ *
+ * @return {String}
+ */
 export function trim(string) {
   return string.trim();
 }
 
-// remove all new lines
+/**
+ * Remove all new lines.
+ *
+ * @param  {String} string
+ *
+ * @return {String}
+ */
 export function trimNewlines(string) {
   return string.replace(/^(\s*|\n*)|(\s*|\n*)$/g, '');
 }
 
-// string utils
+/**
+ * Check if string is empty.
+ *
+ * @param  {String}  string
+ *
+ * @return {Boolean}
+ */
 export function isEmpty(string) {
   return !string.length;
 }
 
-// check if file is empty
-export function isEmptyFile(filePath) {
-  return isEmpty(trimNewlines(fs.readFileSync(filePath, 'utf8')));
+/**
+ * check if file is empty.
+ *
+ * @param  {String}  path
+ *
+ * @return {Boolean}
+ */
+export function isEmptyFile(path) {
+  return isEmpty(trimNewlines(fs.readFileSync(path, 'utf8')));
 }
