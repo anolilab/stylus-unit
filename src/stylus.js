@@ -2,10 +2,25 @@ import stylus from 'Stylus';
 import lodash from 'lodash';
 import cleanCSS from 'clean-css';
 
+/**
+ * Arrayify.
+ *
+ * @param  {Array} it
+ *
+ * @return {Bool}
+ */
 function arrayify(it) {
   return lodash.isArray(it) ? it : [it];
 }
 
+/**
+ * Setup for Stylus.
+ *
+ * @param  {String} string
+ * @param  {Object} config
+ *
+ * @return {Stylus}
+ */
 function styl(string, config) {
   // First through the whole config at stylus,
   // it should ignore stuff it cannot handle
@@ -23,6 +38,13 @@ function styl(string, config) {
   return thisStylus;
 }
 
+/**
+ * Render styl files.
+ *
+ * @param  {String}   stylusCode
+ * @param  {Object}   config
+ * @param  {Function} callback
+ */
 export default function(stylusCode, config, callback) {
   styl(stylusCode, config)
   .render(function(err, cssFromStylus) {

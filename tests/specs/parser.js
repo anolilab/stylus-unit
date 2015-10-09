@@ -18,14 +18,28 @@ var _lodash2 = _interopRequireDefault(_lodash);
 
 var _utils = require('./utils');
 
-function getFile(filePath) {
-  var fileContents = _utils.trimNewlines(_fs2['default'].readFileSync(filePath, 'utf8'));
+/**
+ * Get file content from path.
+ *
+ * @param  {String} path
+ *
+ * @return {String}
+ */
+function getFile(path) {
+  var fileContents = _utils.trimNewlines(_fs2['default'].readFileSync(path, 'utf8'));
 
   return fileContents;
 }
 
-function extractTestFromString(testString) {
-  var test = testString;
+/**
+ * Extract @expect from test file content.
+ *
+ * @param  {Array} content
+ *
+ * @return {Object}
+ */
+function extractTestFromString(content) {
+  var test = content;
 
   var description = test.match(/.*/)[0];
   var stylusAndCss = test.split(/.*@expect.*/).map(_utils.trimNewlines);
@@ -38,14 +52,29 @@ function extractTestFromString(testString) {
   };
 }
 
+/**
+ * Extract tests from string.
+ *
+ * @param  {String} string
+ *
+ * @return {Array}
+ */
 function extractTestsFromString(string) {
-  //  Filter empty strings out, it seems that the
-  //  @it line leaves an empty string entry behind in the array
+  // Filter empty strings out, it seems that the
+  // @it line leaves an empty string entry behind in the array
   return _lodash2['default'].map(_lodash2['default'].reject(string.split(/.*@it\s?/), _utils.isEmpty), extractTestFromString);
 }
 
+/**
+ * Return parsed content.
+ *
+ * @param  {String} file
+ *
+ * @return {Array}
+ */
+
 exports['default'] = function (file) {
-  return extractTestsFromString(getFile(file));
+  extractTestsFromString(getFile(file));
 };
 
 module.exports = exports['default'];

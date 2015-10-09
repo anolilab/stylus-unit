@@ -8,6 +8,14 @@ import getTests from './parser';
 import { should } from 'chai';
 /* jshint ignore:end */ /* eslint-enable */
 
+/**
+ * Search for all tests.
+ *
+ * @param  {Array}    config
+ * @param  {Function} callback
+ *
+ * @return {[type]}
+ */
 function forEachTest(config, callback) {
   const testFiles = lodash.reject(
     glob.sync(config.testDirPath + '/**/*.styl'),
@@ -22,6 +30,13 @@ function forEachTest(config, callback) {
   );
 }
 
+/**
+ * Run stylus tests by mocha.
+ *
+ * @param  {Array} config
+ *
+ * @return {[type]}
+ */
 export default function(config) {
   describe(config.describe, function() {
     forEachTest(config, function(test) {
