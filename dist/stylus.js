@@ -4,9 +4,9 @@ var _interopRequireDefault = require('babel-runtime/helpers/interop-require-defa
 
 exports.__esModule = true;
 
-var _Stylus = require('Stylus');
+var _stylus = require('stylus');
 
-var _Stylus2 = _interopRequireDefault(_Stylus);
+var _stylus2 = _interopRequireDefault(_stylus);
 
 var _lodash = require('lodash');
 
@@ -19,7 +19,7 @@ var _cleanCss2 = _interopRequireDefault(_cleanCss);
 /**
  * Arrayify.
  *
- * @param  {Array} it
+ * @param  {Array|String|Object} it
  *
  * @return {Bool}
  */
@@ -39,7 +39,7 @@ function styl(string, config) {
   // First through the whole config at stylus,
   // it should ignore stuff it cannot handle
   // like use/import/include etc?
-  var thisStylus = _Stylus2['default'](string, config);
+  var thisStylus = _stylus2['default'](string, config);
 
   // Enumerate over the config options that the
   // stylus API only makes available by methods
@@ -66,7 +66,7 @@ exports['default'] = function (stylusCode, config, callback) {
       throw err;
     }
 
-    callback(_cleanCss2['default'].process(cssFromStylus));
+    callback(new _cleanCss2['default']().minify(cssFromStylus).styles);
   });
 };
 
