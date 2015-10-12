@@ -8,16 +8,23 @@ var utils  = rewire('../specs/parser');
 describe('#parser', function() {
   describe('getFile', function() {
     it('get file from path', function() {
-      assert.equal(utils.__get__('getFile')('./tests/fixture/textFile.txt'), 'dasdada');
+      assert.equal(
+        utils.__get__('getFile')(
+          './tests/fixture/textFile.txt'
+        ),
+        'dasdada'
+      );
     });
   });
 
   describe('extractTestFromString', function() {
     it('check if get a object back with our test infos', function() {
-      var file = utils.__get__('getFile')('./tests/fixture/stylus-test-file.styl');
+      var file = utils.__get__('getFile')(
+        './tests/fixture/stylus-test-file.styl'
+      );
       var extractTestFromString = utils.__get__('extractTestFromString');
       var obj = extractTestFromString(file);
-
+console.log(obj);
       assert.equal(lodash.isObject(obj), true);
       assert.equal('description' in obj, true);
       assert.equal('givenStylus' in obj, true);
@@ -27,7 +34,9 @@ describe('#parser', function() {
 
   describe('extractTestsFromString', function() {
     it('check if get a array of objects', function() {
-      var file = utils.__get__('getFile')('./tests/fixture/stylus-2-test-file.styl');
+      var file = utils.__get__('getFile')(
+        './tests/fixture/stylus-2-test-file.styl'
+      );
       var extractTestsFromString = utils.__get__('extractTestsFromString');
       var arr = extractTestsFromString(file);
 

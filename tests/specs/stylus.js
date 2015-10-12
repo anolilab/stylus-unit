@@ -49,6 +49,8 @@ function styl(string, config) {
     }
   });
 
+  thisStylus['import'](__dirname + '/stylus/unit');
+
   return thisStylus;
 }
 

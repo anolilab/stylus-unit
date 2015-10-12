@@ -5,11 +5,13 @@ module.exports = {
     'jshint:dev',
     'eslint:dev',
     'babel:test',
+    'copy:test',
     'mochacli'
   ],
   'default': [
     'clean',
     'test',
-    'babel:dist'
+    'babel:dist',
+    'copy:dist'
   ]
 };

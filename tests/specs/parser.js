@@ -41,12 +41,17 @@ function getFile(path) {
 function extractTestFromString(content) {
   var test = content;
 
-  var description = test.match(/.*/g)[0];
-  var stylusAndCss = test.split(/.*@expect.*/).map(_utils.trimNewlines);
+  var description = test.match(/describe\(([^)]+)\)/g);
+  // const funcDescription = (typeof description[1] !== 'undefined') ?
+  // description[1] :
+  // undefined;
+
+  test = test.replace(/describe\(([^)]+)\)/g, '');
+  var stylusAndCss = test.split(/.*expect.*/).map(_utils.trimNewlines);
   test = test.replace(/.*/, '');
 
   return {
-    description: description,
+    description: description[0],
     givenStylus: stylusAndCss[0],
     expectedCss: new _cleanCss2['default']().minify(stylusAndCss[1]).styles
   };
@@ -62,7 +67,7 @@ function extractTestFromString(content) {
 function extractTestsFromString(string) {
   // Filter empty strings out, it seems that the
   // @it line leaves an empty string entry behind in the array
-  return _lodash2['default'].map(_lodash2['default'].reject(string.split(/.*@it\s?/), _utils.isEmpty), extractTestFromString);
+  return _lodash2['default'].map(_lodash2['default'].reject(string.split(/it\(([^)]+)\)\s/), _utils.isEmpty), extractTestFromString);
 }
 
 /**

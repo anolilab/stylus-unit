@@ -26,12 +26,17 @@ function getFile(path) {
 function extractTestFromString(content) {
   let test = content;
 
-  const description = test.match(/.*/g)[0];
-  const stylusAndCss = test.split(/.*@expect.*/).map(trimNewlines);
+  const description = test.match(/describe\(([^)]+)\)/g);
+  // const funcDescription = (typeof description[1] !== 'undefined') ?
+  // description[1] :
+  // undefined;
+
+  test = test.replace(/describe\(([^)]+)\)/g, '');
+  const stylusAndCss = test.split(/.*expect.*/).map(trimNewlines);
   test = test.replace(/.*/, '');
 
   return {
-    description: description,
+    description: description[0],
     givenStylus: stylusAndCss[0],
     expectedCss: new CleanCSS().minify(stylusAndCss[1]).styles,
   };
@@ -49,7 +54,7 @@ function extractTestsFromString(string) {
   // @it line leaves an empty string entry behind in the array
   return lodash.map(
     lodash.reject(
-      string.split(/.*@it\s?/),
+      string.split(/it\(([^)]+)\)\s/),
       isEmpty
     ),
     extractTestFromString
