@@ -43,3 +43,25 @@ export function isEmpty(string) {
 export function isEmptyFile(path) {
   return isEmpty(trimNewlines(fs.readFileSync(path, 'utf8')));
 }
+
+/**
+ * Get all matches from regex
+ *
+ * @param  {String} string
+ * @param  {Regex} regex
+ * @param  {Integers} capturing
+ *
+ * @return {Array}
+ */
+export function getMatches(string, regex, capturing) {
+  const index = capturing || 1; // default to the first capturing group
+  const matches = [];
+  let match = regex.exec(string);
+
+  while (match !== null) {
+    matches.push(match[index]);
+    match = regex.exec(string);
+  }
+
+  return matches;
+}

@@ -1,6 +1,6 @@
 import lodash from 'lodash';
 import glob from 'glob';
-import { isEmptyFile } from './utils';
+import { isEmptyFile, trimNewlines } from './utils';
 import stylusRenderer from './stylus';
 import getTests from './parser';
 

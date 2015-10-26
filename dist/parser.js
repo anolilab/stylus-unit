@@ -106,4 +106,3 @@ exports['default'] = function (file) {
 };
 
 module.exports = exports['default'];
-//# sourceMappingURL=parser.js.map

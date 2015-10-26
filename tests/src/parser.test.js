@@ -24,7 +24,7 @@ describe('#parser', function() {
       );
       var extractTestFromString = utils.__get__('extractTestFromString');
       var obj = extractTestFromString(file);
-console.log(obj);
+
       assert.equal(lodash.isObject(obj), true);
       assert.equal('description' in obj, true);
       assert.equal('givenStylus' in obj, true);
@@ -39,6 +39,8 @@ console.log(obj);
       );
       var extractTestsFromString = utils.__get__('extractTestsFromString');
       var arr = extractTestsFromString(file);
+
+      console.log(arr);
 
       assert.equal(lodash.isArray(arr), true);
       assert.equal(lodash.isObject(arr[0]), true);

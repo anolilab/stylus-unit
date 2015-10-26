@@ -16,6 +16,30 @@ function getFile(path) {
   return fileContents;
 }
 
+function extractDescriptionFromString(string) {
+  if (string.match(/.*/)[0].indexOf('@it') > 0) {
+    string = 'no description found \n' + string;
+  }
+
+  const  title = string.match(/.*/)[0];
+  const assertions = string.replace(/.*/, '');
+
+  return {
+    title: title,
+    assertions: assertions,
+  };
+}
+
+function extractDescriptionsFromString(string) {
+  var approved = lodash.reject(string.split(/.*@describe\s?/), isEmpty);
+
+  return lodash.map(approved, extractDescriptionFromString);
+}
+
+function getDescriptionsFromFiles(filePath) {
+  return extractDescriptionsFromString(getFile(filePath));
+}
+
 /**
  * Extract @expect from test file content.
  *
@@ -24,19 +48,16 @@ function getFile(path) {
  * @return {Object}
  */
 function extractTestFromString(content) {
+  const regex = /describe\('([^\)]+)'\)/;
   let test = content;
+  const descriptions = regex.exec(test);
 
-  const description = test.match(/describe\(([^)]+)\)/g);
-  // const funcDescription = (typeof description[1] !== 'undefined') ?
-  // description[1] :
-  // undefined;
-
-  test = test.replace(/describe\(([^)]+)\)/g, '');
-  const stylusAndCss = test.split(/.*expect.*/).map(trimNewlines);
+  test = test.replace(regex, '');
+  const stylusAndCss = test.split(/.*expect.*/i).map(trimNewlines);
   test = test.replace(/.*/, '');
 
   return {
-    description: description[0],
+    description: descriptions[1],
     givenStylus: stylusAndCss[0],
     expectedCss: new CleanCSS().minify(stylusAndCss[1]).styles,
   };
@@ -54,20 +75,18 @@ function extractTestsFromString(string) {
   // @it line leaves an empty string entry behind in the array
   return lodash.map(
     lodash.reject(
-      string.split(/it\(([^)]+)\)\s/),
+      string.split(/it\('([^\)]+)'\)\s?/gmi),
       isEmpty
     ),
     extractTestFromString
   );
 }
 
-/**
- * Return parsed content.
- *
- * @param  {String} file
- *
- * @return {Array}
- */
-export default function(file) {
-  extractTestsFromString(getFile(file));
+export default function (assertions, callback) {
+  const mapAssertionFromAssertions = extractTestsFromString(
+    trimNewlines(assertions)
+  );
+  const flatten = lodash.flatten(mapAssertionFromAssertions);
+
+  lodash.each(flatten, callback);
 }
