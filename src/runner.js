@@ -2,11 +2,20 @@ import lodash from 'lodash';
 import glob from 'glob';
 import { isEmptyFile, trimNewlines } from './utils';
 import stylusRenderer from './stylus';
-import getTests from './parser';
+import {extractTestsFromString, getDescriptionsFromFiles} from './parser';
 
 /* eslint-disable */ /* jshint ignore:start */
 import { should } from 'chai';
 /* jshint ignore:end */ /* eslint-enable */
+
+export function forEachAssertion(assertions, callback) {
+  const mapAssertionFromAssertions = extractTestsFromString(
+    trimNewlines(assertions)
+  );
+  const flatten = lodash.flatten(mapAssertionFromAssertions);
+
+  lodash.each(flatten, callback);
+}
 
 /**
  * Search for all tests.
@@ -24,7 +33,7 @@ function forEachTest(config, callback) {
 
   lodash.each(
     lodash.flatten(
-      lodash.map(testFiles, getTests)
+      lodash.map(testFiles, getDescriptionsFromFiles)
     ),
     callback
   );

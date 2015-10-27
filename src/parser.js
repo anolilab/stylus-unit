@@ -10,19 +10,28 @@ import { trimNewlines, isEmpty } from './utils';
  *
  * @return {String}
  */
-function getFile(path) {
+function getFileContent(path) {
   const fileContents = trimNewlines(fs.readFileSync(path, 'utf8'));
 
   return fileContents;
 }
 
+/**
+ * Extract description and title from string.
+ *
+ * @param  {String} string
+ *
+ * @return {Object}
+ */
 function extractDescriptionFromString(string) {
-  if (string.match(/.*/)[0].indexOf('@it') > 0) {
-    string = 'no description found \n' + string;
+  let content = string;
+
+  if (content.match(/.*/)[0].indexOf('it') > 0) {
+    content = 'no description found \n' + content;
   }
 
-  const  title = string.match(/.*/)[0];
-  const assertions = string.replace(/.*/, '');
+  const title = content.match(/.*/)[0];
+  const assertions = content.replace(/.*/, '');
 
   return {
     title: title,
@@ -30,14 +39,17 @@ function extractDescriptionFromString(string) {
   };
 }
 
+/**
+ * Extract descriptions from string.
+ *
+ * @param  {String} string
+ *
+ * @return {Array}
+ */
 function extractDescriptionsFromString(string) {
-  var approved = lodash.reject(string.split(/.*@describe\s?/), isEmpty);
+  const approved = lodash.reject(string.split(/.*@describe\s?/), isEmpty);
 
   return lodash.map(approved, extractDescriptionFromString);
-}
-
-function getDescriptionsFromFiles(filePath) {
-  return extractDescriptionsFromString(getFile(filePath));
 }
 
 /**
@@ -48,8 +60,8 @@ function getDescriptionsFromFiles(filePath) {
  * @return {Object}
  */
 function extractTestFromString(content) {
-  const regex = /describe\('([^\)]+)'\)/;
   let test = content;
+  const regex = /describe\('([^\)]+)'\)/;
   const descriptions = regex.exec(test);
 
   test = test.replace(regex, '');
@@ -70,23 +82,25 @@ function extractTestFromString(content) {
  *
  * @return {Array}
  */
-function extractTestsFromString(string) {
+export function extractTestsFromString(string) {
   // Filter empty strings out, it seems that the
   // @it line leaves an empty string entry behind in the array
   return lodash.map(
     lodash.reject(
-      string.split(/it\('([^\)]+)'\)\s?/gmi),
+      string.split(/.*it\('([^\)]+)'\)\s?/),
       isEmpty
     ),
     extractTestFromString
   );
 }
 
-export default function (assertions, callback) {
-  const mapAssertionFromAssertions = extractTestsFromString(
-    trimNewlines(assertions)
-  );
-  const flatten = lodash.flatten(mapAssertionFromAssertions);
-
-  lodash.each(flatten, callback);
+/**
+ * [getDescriptionsFromFiles description]
+ *
+ * @param  {String} path
+ *
+ * @return {Array}
+ */
+export function getDescriptionsFromFiles(path) {
+  return extractDescriptionsFromString(getFileContent(path));
 }
