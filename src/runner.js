@@ -1,7 +1,6 @@
 import lodash from 'lodash';
 import glob from 'glob';
 import { isEmptyFile, trimNewlines } from './utils';
-import stylusRenderer from './stylus';
 import {extractTestsFromString, getDescriptionsFromFiles} from './parser';
 
 /* eslint-disable */ /* jshint ignore:start */
@@ -47,16 +46,13 @@ function forEachTest(config, callback) {
  * @return {[type]}
  */
 export default function(config) {
-  describe(config.describe, function() {
-    forEachTest(config, function(test) {
-      it(test.description, function() {
-        stylusRenderer(
-          test.givenStylus,
-          config.stylus,
-          function(actualCss) {
-            actualCss.should.equal(test.expectedCss);
-          }
-        );
+  forEachTest(config, function(description) {
+    // sets up describe
+    describe(description.title, function() {
+      forEachAssertion(description.assertions, function(test) {
+        it(test.assertion, function() {
+          test.run(config);
+        });
       });
     });
   });

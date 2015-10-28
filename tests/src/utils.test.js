@@ -39,13 +39,4 @@ cool.';
       assert.equal(utils.isEmptyFile('./tests/fixture/textFile.txt'), false);
     });
   });
-
-  describe('getMatches', function() {
-    it('check if get a array with two values', function() {
-      var string = "describe('test') describe('amcss')";
-      var regex = /describe\('([^\)]+)'\)/g;
-
-      assert.deepEqual(utils.getMatches(string, regex, 0), ['test', 'amcss']);
-    });
-  });
 });

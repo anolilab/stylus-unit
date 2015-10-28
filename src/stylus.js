@@ -37,6 +37,13 @@ function styl(string, config) {
 
   thisStylus.import(__dirname + '/stylus/unit');
 
+  // Allow to define global variables/functions from JS
+  if (config.define) {
+    lodash.each(config.define, function(val, key) {
+      thisStylus.define(key, val);
+    });
+  }
+
   return thisStylus;
 }
 
