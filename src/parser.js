@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { assert } from 'chai';
 import lodash from 'lodash';
 import { trimNewlines, isEmpty, cleanCSS } from './utils';
 import stylusRenderer from './stylus';
@@ -56,49 +57,75 @@ function extractDescriptionsFromString(string) {
 }
 
 /**
+ * Extract expect from test.
+ *
+ * @param  {String} string
+ * @param  {String} assertion
+ *
+ * @return {Object}
+ */
+function extractExpect(string, assertion) {
+  const content = string;
+  const stylusAndCss = content.split(/.*expect\('([^\)]+)'\)/).map(
+    trimNewlines
+  );
+  const expectedCss = cleanCSS.minify(stylusAndCss[1]).styles;
+
+  return {
+    assertion: assertion,
+    run: function(config) {
+      stylusRenderer(stylusAndCss[0], config.stylus, function(actualCss) {
+        actualCss.should.equal(expectedCss);
+      });
+    },
+  };
+}
+
+/**
+ * Extract throws from test string.
+ *
+ * @param  {String} string
+ * @param  {String} assertion
+ *
+ * @return {Object}
+ */
+function extractThrows(string, assertion) {
+  const content = string;
+  const stylus = (content.split(/.*throws\('([^\)]+)'\)/).map(trimNewlines))[0];
+  let error = (/throws\s*(?:\/(.*)\/)?/).exec(content)[1];
+
+  if (typeof(error) !== 'undefined') {
+    error = new RegExp(error);
+  }
+
+  return {
+    assertion: assertion,
+    run: function(config) {
+      assert.throws(
+        function() {
+          stylusRenderer(stylus, config.stylus, function() {});
+        },
+        error
+      );
+    },
+  };
+}
+
+/**
  *
  * @param  {String} content
  *
  * @return {Object}
  */
 function extractTestFromString(content) {
-  let string = content;
+  const string = content;
   const assertion = string.match(/.*/)[0];
-  let test        = string.replace(/.*/, '');
+  const test = string.replace(/.*/, '');
 
   if (test.match(/expect\('([^\)]+)'\)/)) {
-    const stylusAndCss = test.split(/.*expect\('([^\)]+)'\)/).map(trimNewlines);
-    const expectedCss = cleanCSS.minify(stylusAndCss[1]).styles;
-
-    return {
-      assertion: assertion,
-      run: function (config) {
-        stylusRenderer(stylusAndCss[0], config.stylus, function (actualCss) {
-          actualCss.should.equal(expectedCss);
-        });
-      }
-    };
+    return extractExpect(test, assertion);
   } else if (test.match(/throws\('([^\)]+)'\)/)) {
-    const stylus = (test.split(/.*throws\('([^\)]+)'\)/).map(trimNewlines))[0];
-    let error = (/throws\s*(?:\/(.*)\/)?/).exec(test)[1];
-
-    if (typeof(error) !== 'undefined') {
-      error = new RegExp(error);
-    }
-
-    return {
-      assertion: assertion,
-      run: function (config) {
-        assert.throws(
-          function () {
-            stylusRenderer(stylus, config.stylus, function () {
-
-            });
-          },
-          error
-        );
-      },
-    };
+    return extractThrows(test, assertion);
   }
 }
 
