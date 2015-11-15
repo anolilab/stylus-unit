@@ -1,4 +1,4 @@
-module('test')
+describe('test')
   describe('amcss')
     it('should output amcss for a given properties')
       am(module)
@@ -8,7 +8,7 @@ module('test')
       am(module, large)
         font-size: 2em;
 
-    expect()
+    expct()
       [ui-module] {
         color: red;
       }

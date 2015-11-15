@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { assert } from 'chai';
 import lodash from 'lodash';
-import { trimNewlines, isEmpty, cleanCSS } from './utils';
+import { trimNewlines, isEmpty, cleanCssMinify } from './utils';
 import stylusRenderer from './stylus';
 
 /**
@@ -26,13 +26,14 @@ function getFileContent(path) {
  */
 function extractDescriptionFromString(string) {
   let content = string;
+  const describeRegex = /describe\('([^\)]+)'\)/;
 
   if (content.match(/.*/)[0].indexOf('it') > 0) {
     content = 'no description found \n' + content;
   }
 
-  const title = content.match(/.*/)[0];
-  const assertions = content.replace(/.*/, '');
+  const title = content.match(describeRegex)[1];
+  const assertions = content.replace(describeRegex, '');
 
   return {
     title: title,
@@ -48,12 +49,27 @@ function extractDescriptionFromString(string) {
  * @return {Array}
  */
 function extractDescriptionsFromString(string) {
+  let content = string;
+  const regexModule = /module\('([^\)]+)'\)/;
+
+  if (!regexModule.test(content)) {
+    throw new ReferenceError('All test need a module("Module Name") function.');
+  }
+
+  const module = content.match(regexModule);
+  content = content.replace(regexModule, '');
   const approved = lodash.reject(
-    string.split(/.*describe\('([^\)]+)'\)\s?/),
+    content.split(/describe\(\)\s?/),
     isEmpty
   );
 
-  return lodash.map(approved, extractDescriptionFromString);
+  const map = lodash.map(
+    approved,
+    extractDescriptionFromString
+  );
+  map[0].module = module[1];
+
+  return map;
 }
 
 /**
@@ -66,10 +82,10 @@ function extractDescriptionsFromString(string) {
  */
 function extractExpect(string, assertion) {
   const content = string;
-  const stylusAndCss = content.split(/.*expect\('([^\)]+)'\)/).map(
+  const stylusAndCss = content.split(/.*expect\(\)/).map(
     trimNewlines
   );
-  const expectedCss = cleanCSS.minify(stylusAndCss[1]).styles;
+  const expectedCss = cleanCssMinify(stylusAndCss[1]);
 
   return {
     assertion: assertion,
@@ -78,6 +94,7 @@ function extractExpect(string, assertion) {
         actualCss.should.equal(expectedCss);
       });
     },
+    type: 'expect',
   };
 }
 
@@ -91,8 +108,8 @@ function extractExpect(string, assertion) {
  */
 function extractThrows(string, assertion) {
   const content = string;
-  const stylus = (content.split(/.*throws\('([^\)]+)'\)/).map(trimNewlines))[0];
-  let error = (/throws\s*(?:\/(.*)\/)?/).exec(content)[1];
+  const stylus = (content.split(/.*throws/).map(trimNewlines))[0];
+  let error = (/throws\('([^\)]+)'\)/).exec(content)[1];
 
   if (typeof(error) !== 'undefined') {
     error = new RegExp(error);
@@ -108,6 +125,7 @@ function extractThrows(string, assertion) {
         error
       );
     },
+    type: 'throws',
   };
 }
 
@@ -119,14 +137,16 @@ function extractThrows(string, assertion) {
  */
 function extractTestFromString(content) {
   const string = content;
-  const assertion = string.match(/.*/)[0];
+  const assertion = string.match(/describe\('([^\)]+)'\)/)[1];
   const test = string.replace(/.*/, '');
 
-  if (test.match(/expect\('([^\)]+)'\)/)) {
+  if (test.match(/.*expect/)) {
     return extractExpect(test, assertion);
-  } else if (test.match(/throws\('([^\)]+)'\)/)) {
+  } else if (test.match(/.*throws/)) {
     return extractThrows(test, assertion);
   }
+
+  return {};
 }
 
 /**

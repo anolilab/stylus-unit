@@ -181,4 +181,3 @@ function extractTestsFromString(string) {
 function getDescriptionsFromFiles(path) {
   return extractDescriptionsFromString(getFileContent(path));
 }
-//# sourceMappingURL=parser.js.map

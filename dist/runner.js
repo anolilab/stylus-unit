@@ -68,4 +68,3 @@ function forEachTest(config, callback) {
  *
  * @return {[type]}
  */
-//# sourceMappingURL=runner.js.map

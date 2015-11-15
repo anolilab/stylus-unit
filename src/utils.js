@@ -45,9 +45,16 @@ export function isEmptyFile(path) {
   return isEmpty(trimNewlines(fs.readFileSync(path, 'utf8')));
 }
 
-export function cleanCSS() {
-  return new CleanCSS({
+/**
+ * [cleanCSS description]
+ *
+ * @return {CleanCSS}
+ */
+export function cleanCssMinify(source) {
+  const minify = new CleanCSS({
     advanced: false,
     aggressiveMerging: false,
-  });
+  }).minify(source).styles;
+
+  return minify;
 }

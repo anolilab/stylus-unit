@@ -80,4 +80,3 @@ function styl(string, config) {
  * @param  {Object}   config
  * @param  {Function} callback
  */
-//# sourceMappingURL=stylus.js.map

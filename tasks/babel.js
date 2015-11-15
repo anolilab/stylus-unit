@@ -3,9 +3,7 @@
 
 module.exports = {
   options: {
-    stage: 1,
-    loose: ['all'],
-    optional: ['runtime']
+    presets: ['es2015'],
   },
   dist: {
     options: {

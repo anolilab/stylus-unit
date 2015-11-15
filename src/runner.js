@@ -48,10 +48,12 @@ function forEachTest(config, callback) {
 export default function(config) {
   forEachTest(config, function(description) {
     // sets up describe
-    describe(description.title, function() {
-      forEachAssertion(description.assertions, function(test) {
-        it(test.assertion, function() {
-          test.run(config);
+    describe(description.module, function() {
+      describe(description.title, function() {
+        forEachAssertion(description.assertions, function(test) {
+          it(test.assertion, function() {
+            test.run(config);
+          });
         });
       });
     });

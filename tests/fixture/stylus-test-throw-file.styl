@@ -8,13 +8,5 @@ module('test')
       am(module, large)
         font-size: 2em;
 
-    expect()
-      [ui-module] {
-        color: red;
-      }
-      [ui-module~="blue"] {
-        color: blue;
-      }
-      [ui-module~="large"] {
-        font-size: 2em;
-      }
+    throws('throws a error')
+      error()

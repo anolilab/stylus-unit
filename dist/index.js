@@ -71,4 +71,3 @@ function getDefaultTestDescription() {
  *
  * @param customConfig:
  */
-//# sourceMappingURL=index.js.map
