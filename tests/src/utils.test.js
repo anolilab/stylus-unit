@@ -4,6 +4,17 @@ var assert = require('chai').assert;
 var utils  = require('../specs/utils');
 
 describe('#utils', function() {
+  describe('getFileContent', function() {
+    it('get file from path', function() {
+      assert.equal(
+        utils.getFileContent(
+          './tests/fixture/textFile.txt'
+        ),
+        'dasdada'
+      );
+    });
+  });
+
   describe('trim', function() {
     it('whitespace mutation utils', function() {
       var string = '  your string   ';

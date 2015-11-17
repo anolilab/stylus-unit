@@ -8,6 +8,7 @@ exports.trimNewlines = trimNewlines;
 exports.isEmpty = isEmpty;
 exports.isEmptyFile = isEmptyFile;
 exports.cleanCssMinify = cleanCssMinify;
+exports.getFileContent = getFileContent;
 
 var _fs = require('fs');
 
@@ -75,4 +76,17 @@ function cleanCssMinify(source) {
   }).minify(source).styles;
 
   return minify;
+}
+
+/**
+ * Get file content from path.
+ *
+ * @param  {String} path
+ *
+ * @return {String}
+ */
+function getFileContent(path) {
+  var fileContents = trimNewlines(_fs2.default.readFileSync(path, 'utf8'));
+
+  return fileContents;
 }

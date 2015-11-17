@@ -6,10 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.extractTestsFromString = extractTestsFromString;
 exports.getDescriptionsFromFiles = getDescriptionsFromFiles;
 
-var _fs = require('fs');
-
-var _fs2 = _interopRequireDefault(_fs);
-
 var _chai = require('chai');
 
 var _lodash = require('lodash');
@@ -25,19 +21,6 @@ var _stylus2 = _interopRequireDefault(_stylus);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Get file content from path.
- *
- * @param  {String} path
- *
- * @return {String}
- */
-function getFileContent(path) {
-  var fileContents = (0, _utils.trimNewlines)(_fs2.default.readFileSync(path, 'utf8'));
-
-  return fileContents;
-}
-
-/**
  * Extract description and title from string.
  *
  * @param  {String} string
@@ -49,7 +32,7 @@ function extractDescriptionFromString(string) {
   var describeRegex = /describe\('([^\)]+)'\)/;
 
   if (content.match(/.*/)[0].indexOf('it') > 0) {
-    content = 'no description found \n' + content;
+    content = 'describe(' + 'no description found' + ')' + ' \n' + content;
   }
 
   var title = content.match(describeRegex)[1];
@@ -179,5 +162,5 @@ function extractTestsFromString(string) {
  * @return {Array}
  */
 function getDescriptionsFromFiles(path) {
-  return extractDescriptionsFromString(getFileContent(path));
+  return extractDescriptionsFromString((0, _utils.getFileContent)(path));
 }

@@ -46,7 +46,7 @@ export default function(customConfig) {
 
   // global config will be used by runner
   // for configing stylus compiler and test description / suite path
-  root.config = lodash.merge(defaultConfig, customConfig);
+  root.config = lodash.merge({}, defaultConfig, customConfig);
 
   new Mocha(config.mocha)
   .addFile(__dirname + '/runner')

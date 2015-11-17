@@ -10,6 +10,10 @@ exports.default = function (config) {
     // sets up describe
     describe(description.module, function () {
       describe(description.title, function () {
+        // run through each description
+        // get test from @it and @expect
+        // add to array
+        // pass each array item through the it callback function
         forEachAssertion(description.assertions, function (test) {
           it(test.assertion, function () {
             test.run(config);

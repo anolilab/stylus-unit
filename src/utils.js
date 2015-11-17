@@ -58,3 +58,16 @@ export function cleanCssMinify(source) {
 
   return minify;
 }
+
+/**
+ * Get file content from path.
+ *
+ * @param  {String} path
+ *
+ * @return {String}
+ */
+export function getFileContent(path) {
+  const fileContents = trimNewlines(fs.readFileSync(path, 'utf8'));
+
+  return fileContents;
+}

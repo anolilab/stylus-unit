@@ -1,21 +1,7 @@
-import fs from 'fs';
 import { assert } from 'chai';
 import lodash from 'lodash';
-import { trimNewlines, isEmpty, cleanCssMinify } from './utils';
+import { trimNewlines, isEmpty, cleanCssMinify, getFileContent } from './utils';
 import stylusRenderer from './stylus';
-
-/**
- * Get file content from path.
- *
- * @param  {String} path
- *
- * @return {String}
- */
-function getFileContent(path) {
-  const fileContents = trimNewlines(fs.readFileSync(path, 'utf8'));
-
-  return fileContents;
-}
 
 /**
  * Extract description and title from string.
@@ -29,7 +15,7 @@ function extractDescriptionFromString(string) {
   const describeRegex = /describe\('([^\)]+)'\)/;
 
   if (content.match(/.*/)[0].indexOf('it') > 0) {
-    content = 'no description found \n' + content;
+    content = 'describe(' + 'no description found' + ')' + ' \n' + content;
   }
 
   const title = content.match(describeRegex)[1];
